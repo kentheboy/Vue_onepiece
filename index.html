@@ -1,0 +1,217 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"　integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+<body>
+    <div id="ex1">
+        <h1>VueJS とは</h1>
+        <h5>DOM操作をVue経由で自動で行う</h5>
+        {{ luffy }}
+        <br>
+        {{`俺は${luffy}`}}
+    </div>
+    <div id="ex2">
+        <h1>v-bind</h1>
+        <h5>属性値にVueインスタンスデータを結び付ける</h5>
+        <a v-bind:href="url">チョッパー</a>
+        <br>
+        <input type="text" v-bind:placeholder="devil">
+        <!-- v-bind is used to bind, the dom element with JS variable -->
+    </div>
+    <div id="ex3">
+        <h1>v-for</h1>
+        <h5>繰り返し処理（配列）</h5>
+        <ul>
+            <li 
+                v-for="character in four_emperors"
+                v-bind:key="character"
+            >
+                <!-- "v-bind:key" placement is recommended for the vue to acknowledge the key variable in the array loop -->
+                {{character}}
+            </li>
+        </ul>
+    </div>
+    <div id="ex4">
+        <h5>繰り返し処理（オブジェクト）</h5>
+        <ul>
+            <li
+                v-for="(fruit_name, character) in devil_fruits"
+                v-bind:key="character"
+            >
+                <!--
+                    v-for for object
+                    "v-for:(variable, property) in dataName" 
+                --> 
+                {{character}}:{{fruit_name}}
+            </li>
+        </ul>
+    </div>
+    <div id="ex5">
+        <h1>v-on</h1>
+        <h5>イベントを処理する</h5>
+        <input type="text"
+            v-bind:placeholder="devil"
+            v-bind:value="name"
+            v-on:input="name = $event.target.value"
+        >{{name}}
+        <!-- v-on is used to listen to the event of the DOM, and do the action written in it -->
+        <!-- 
+            "v-on:input": input entry event
+            "v-on:click": input click event
+            etc..
+            $event: event object that stores whatever event occur
+            $event.target: event detail of the target element v-on is pointing, in this case input element
+         -->
+    </div>
+    <div id="ex6">
+        <h5>イベントを処理する(省略記法)</h5>
+        <input type="text"
+            :placeholder="devil"
+            :value="name"
+            @input="name = $event.target.value"
+        >{{name}}
+    </div>
+    <div id="ex7">
+        <h1>v-model</h1>
+        <h5>フォームの入力要素に使える</h5>
+        <input type="text"
+            v-model=name
+        >{{name}}
+    </div>
+    <div id="ex8">
+        <h1>computed</h1>
+        <h5>関数で算出したデータを返す</h5>
+        <input type="text" v-model=bounty>ベリー
+        <input type="text" v-model=count>人
+        <div>
+            懸賞金の合計：{{total}}ベリー
+        </div>
+    </div>
+    <div id="ex9">
+        <h1>method</h1>
+        <h5>method関数による算出データを返す</h5>
+        <input type="text" v-model=bounty>ベリー
+        <input type="text" v-model=count>人
+        <div>
+            懸賞金の合計：{{total()}}ベリー
+        </div>
+    </div>
+    <div id="ex10">
+        <h1>computed vs method</h1>
+        <h5>computedとmethodの違い</h5>
+        <input type="text" v-model=bounty>ベリー
+        <input type="text" v-model=count>人
+        <div>
+            懸賞金の合計：{{total}}ベリー
+        </div>
+        <hr>
+        computedランダム数値: {{bounty1}} 
+        <br>
+        methodランダム数値: {{bounty2()}} 
+        <div>
+            <p style="color:red">
+                computedは連携する値にイベントが確認されない限り、値はキャッシュされ
+                、関数が実行されることはない
+            </p>
+            <p style="color:red">
+                一方、methodは連携する値に関係なく、画面上で何かしらのイベントが発生するたびに関数が実行される
+            </p>
+        </div>
+    </div>
+    <div id="ex11">
+        <h1>v-show</h1>
+        <h5>要素の表示・非表示</h5>
+        悪魔の実を。。。
+        <button v-on:click="eat = true">食べる</button>
+        <button v-on:click="eat = false">食べない</button>
+        <p v-show="eat">=>能力者になった</p>
+    </div>
+    <div id="ex12">
+        <h1>v-if</h1>
+        <h5>要素の表示・非表示</h5>
+        悪魔の実を。。。
+        <button v-on:click="eat = true">食べる</button>
+        <button v-on:click="eat = false">食べない</button>
+        <p v-if="eat">=>能力者になった</p>
+        <p v-else>=>能力者ではない</p>
+    </div>
+    <div id="ex13">
+        <h1>v-show vs v-if</h1>
+        <h5>要素の表示・非表示</h5>
+        悪魔の実を。。。
+        <button v-on:click="eat = true">食べる</button>
+        <button v-on:click="eat = false">食べない</button>
+        <p v-if="eat">=>能力者になった(v-if)</p>
+        <p v-show="eat">=>能力者になった(v-show)</p>
+        <!-- ※note that "v-if" deletes the DOM element completely, while the "v-show" hide the DOM element using the style -->
+        <div>
+            <p style="color:red">
+                v-ifは要素を消すが、v-showは要素を隠す
+            </p>
+        </div>
+    </div>
+    <div id="ex14">
+        <h1>lifecycle hooks</h1>
+        <h5>~処理を特定のタイミングで呼び出す~</h5>
+        悪魔の実を
+        <button v-on:click="addCount">食べる</button>
+        <p>能力者は {{ count }} 人</p>
+        refer to <a href="https://vuejs.org/guide/essentials/lifecycle.html#lifecycle-diagram"  target="_blank">the official document</a>
+    </div>
+
+    <div id="ex15">
+        <h1>Vue Component</h1>
+        <h5>再利用可能なVueインスタンス</h5>
+        <button-devil></button-devil>
+        <!-- 
+            ※note: on the HTML, make sure to call the component name in the small letter
+            since the HTML language itself does not understand the diffence between the capital and small letter,
+            therefore even if the component name is defined in capital letter, the html would understand the component name in small letter 
+        -->
+    </div>
+
+    <div id="ex16">
+        <h5>データをcompponentに持たせる</h5>
+        <button-conut></button-conut>
+    </div>
+
+    <div id="ex17">
+        <h5>ComponentのRoot制御について</h5>
+        <button-2characters></button-2characters>
+    </div>
+
+    <div id="ex18">
+        <h5>Component内でのv-forの利用</h5>
+        <button-3characters></button-3characters>
+    </div>
+
+    <div id="ex19">
+        <h1>Local Component</h1>
+        <h5>コンポーネントを特定のVue モジュール内で使える</h5>
+        <local-characters></local-characters>
+    </div>
+
+    <div id="ex20">
+        <h1>Component Relations</h1>
+        <h5>親子コンポーネント</h5>
+        <d-family></d-family>
+    </div>
+
+    <div id="ex21">
+        <h5>コンポーネント間データ移管（親から子へ）</h5>
+        <d-family2></d-family2>
+    </div>
+
+    <div id="ex22">
+        <h5>コンポーネント間データ移管（子から親へ）</h5>
+        <d-family3></d-family3>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+    <script src="index.js"></script>
+</body>
+</html>
